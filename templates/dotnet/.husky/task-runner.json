@@ -1,0 +1,18 @@
+{
+  "tasks": [
+    {
+      "name": "csharpier",
+      "group": "pre-commit",
+      "command": "dotnet",
+      "args": ["csharpier", "format", "${staged}"],
+      "include": ["**/*.cs"]
+    },
+    {
+      "name": "restage",
+      "group": "pre-commit",
+      "command": "git",
+      "args": ["add", "${staged}"],
+      "include": ["**/*.cs"]
+    }
+  ]
+}
