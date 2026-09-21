@@ -1,0 +1,8 @@
+<Project>
+  <Target Name="InstallGitHooks"
+          BeforeTargets="Restore;CollectPackageReferences"
+          Condition="'$(HUSKY)' != '0' And Exists('$(MSBuildThisFileDirectory).git')">
+    <Exec Command="dotnet tool restore" WorkingDirectory="$(MSBuildThisFileDirectory)" StandardOutputImportance="Low" StandardErrorImportance="High" />
+    <Exec Command="dotnet husky install" WorkingDirectory="$(MSBuildThisFileDirectory)" StandardOutputImportance="Low" StandardErrorImportance="High" />
+  </Target>
+</Project>
