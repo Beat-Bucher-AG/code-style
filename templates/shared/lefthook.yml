@@ -1,0 +1,13 @@
+pre-commit:
+  jobs:
+    - name: csharpier
+      glob: "*.cs"
+      run: dotnet csharpier format {staged_files}
+      stage_fixed: true
+
+    - name: prettier
+      glob: "*.{js,jsx,ts,tsx,css,scss,json,md}"
+      run: npx prettier --write {staged_files}
+      stage_fixed: true
+      skip:
+        - run: test ! -f package.json
