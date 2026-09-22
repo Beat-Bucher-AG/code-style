@@ -1,0 +1,23 @@
+name: code-style
+
+on:
+  pull_request:
+
+jobs:
+  code-style:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Load templates
+        uses: actions/checkout@v4
+        with:
+          repository: bbag/code-style
+          path: .code-style
+
+      - name: Move templates from the repo folder
+        run: mv .code-style "$RUNNER_TEMP/code-style"
+
+      - name: Check code style
+        run: bash "$RUNNER_TEMP/code-style/check.sh"
