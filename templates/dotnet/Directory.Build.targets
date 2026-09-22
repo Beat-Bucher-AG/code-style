@@ -1,8 +1,12 @@
 <Project>
   <Target Name="InstallGitHooks"
           BeforeTargets="Restore;CollectPackageReferences"
-          Condition="'$(HUSKY)' != '0' And Exists('$(MSBuildThisFileDirectory).git')">
-    <Exec Command="dotnet tool restore" WorkingDirectory="$(MSBuildThisFileDirectory)" StandardOutputImportance="Low" StandardErrorImportance="High" />
-    <Exec Command="dotnet husky install" WorkingDirectory="$(MSBuildThisFileDirectory)" StandardOutputImportance="Low" StandardErrorImportance="High" />
+          Condition="'$(CI)' != 'true' And '$(LEFTHOOK)' != '0' And Exists('$(MSBuildThisFileDirectory).git')">
+    <Exec Command="lefthook version" IgnoreExitCode="true" StandardOutputImportance="Low" StandardErrorImportance="Low">
+      <Output TaskParameter="ExitCode" PropertyName="LefthookExitCode" />
+    </Exec>
+    <Error Condition="'$(LefthookExitCode)' != '0'"
+           Text="Lefthook fehlt auf diesem Rechner. Einmal installieren: winget install evilmartians.lefthook, danach IDE neu starten." />
+    <Exec Command="lefthook install" WorkingDirectory="$(MSBuildThisFileDirectory)" StandardOutputImportance="Low" />
   </Target>
 </Project>
