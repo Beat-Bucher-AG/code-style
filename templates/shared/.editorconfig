@@ -15,3 +15,6 @@ max_line_length = 160
 dotnet_diagnostic.IDE0055.severity = none
 csharp_style_namespace_declarations = file_scoped:warning
 csharp_using_directive_placement = outside_namespace:warning
+
+[*.{cmd,bat}]
+end_of_line = crlf
